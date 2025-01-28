@@ -10,11 +10,24 @@ RUN apt-get update && apt-get install -y \
     tmux \
     && apt-get clean
 
+# 引数としてユーザー情報を受け取る
+ARG USERNAME
+ARG USER_UID
+ARG USER_GID
+
+# ユーザーとグループを作成
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+
 # zsh をデフォルトシェルに設定
 RUN chsh -s /usr/bin/zsh
 
 # 作業ディレクトリを設定
 WORKDIR /root
+
+USER $USERNAME
 
 # dotfiles リポジトリをクローン
 RUN git clone https://github.com/masahiro-kubota/dotfiles.git
@@ -24,13 +37,14 @@ RUN cd dotfiles && chmod +x install.sh && ./install.sh
 
 # 作業ディレクトリを /workspace に設定
 WORKDIR /workspace
+RUN sudo chown $USERNAME:$USERNAME /workspace
 
 # Zsh プロンプトをカスタマイズ
-RUN echo 'export PROMPT="%F{yellow}[ros2-custom]%f %F{green}%n%f:%F{blue}%~%f$ "' >> /root/.zshrc
+RUN echo 'export PROMPT="%F{yellow}[ros2-custom]%f %F{green}%n%f:%F{blue}%~%f$ "' >> /home/$USERNAME/.zshrc
 
 # 環境変数を設定 .zshrcに色々書いてるのでENVではなく.zshrcに書き込み
-RUN echo 'export CC=/usr/bin/gcc' >> /root/.zshrc
-RUN echo 'export CXX=/usr/bin/g++' >> /root/.zshrc
+RUN echo 'export CC=/usr/bin/gcc' >> /home/$USERNAME/.zshrc
+RUN echo 'export CXX=/usr/bin/g++' >> /home/$USERNAME/.zshrc
 
 # zsh をデフォルトで起動
 CMD ["zsh"]
