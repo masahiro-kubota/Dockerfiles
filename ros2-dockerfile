@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
 ARG USERNAME
 ARG USER_UID
 ARG USER_GID
+ARG CONTAINER_NAME
 
 # ユーザーとグループを作成
 RUN groupadd --gid $USER_GID $USERNAME \
@@ -25,7 +26,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
 RUN chsh -s /usr/bin/zsh
 
 # 作業ディレクトリを設定
-WORKDIR /root
+WORKDIR /home/$USERNAME
 
 USER $USERNAME
 
@@ -40,7 +41,7 @@ WORKDIR /workspace
 RUN sudo chown $USERNAME:$USERNAME /workspace
 
 # Zsh プロンプトをカスタマイズ
-RUN echo 'export PROMPT="%F{yellow}[ros2-custom]%f %F{green}%n%f:%F{blue}%~%f$ "' >> /home/$USERNAME/.zshrc
+RUN echo 'export PROMPT="%F{yellow}['${CONTAINER_NAME}']%f %F{green}%n%f:%F{blue}%~%f$ "' >> /home/$USERNAME/.zshrc
 
 # 環境変数を設定 .zshrcに色々書いてるのでENVではなく.zshrcに書き込み
 RUN echo 'export CC=/usr/bin/gcc' >> /home/$USERNAME/.zshrc
