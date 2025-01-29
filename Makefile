@@ -32,6 +32,8 @@ run:
 	docker run --rm \
 		-v $(WORKSPACE):/workspace \
 		-v ~/.ssh:/home/$(USERNAME)/.ssh:ro \
+		-v ~/.gitconfig:/home/$(USERNAME)/.gitconfig \
+		-v ~/.zsh_history:/home/$(USERNAME)/.zsh_history \
 		--name $(CONTAINER_NAME)-$(USERNAME) \
 		--network host \
 		-it $(IMAGE_NAME)-$(USERNAME)
