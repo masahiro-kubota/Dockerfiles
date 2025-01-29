@@ -29,7 +29,9 @@ run:
 	@echo "Container Name: $(CONTAINER_NAME)-$(USERNAME)"
 	@echo "Image Name: $(IMAGE_NAME)-$(USERNAME)"
 	@echo "User: $(USERNAME) (UID: $(UID), GID: $(GID))"
-	docker run --rm -v $(WORKSPACE):/workspace \
+	docker run --rm \
+		-v $(WORKSPACE):/workspace \
+		-v ~/.ssh:/home/$(USERNAME)/.ssh:ro \
 		--name $(CONTAINER_NAME)-$(USERNAME) \
 		--network host \
 		-it $(IMAGE_NAME)-$(USERNAME)

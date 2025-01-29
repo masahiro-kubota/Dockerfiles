@@ -12,6 +12,8 @@ RUN apt-get update && apt-get install -y \
     gdb \
     ros-humble-diagnostic-updater \
     ros-humble-rmw-cyclonedds-cpp \
+    clang-tidy \
+    pre-commit \
     && apt-get clean
 
 # 引数としてユーザー情報を受け取る
