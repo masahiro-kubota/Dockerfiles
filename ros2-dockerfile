@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     tmux \
+    libgoogle-glog-dev \
     && apt-get clean
 
 # 引数としてユーザー情報を受け取る
