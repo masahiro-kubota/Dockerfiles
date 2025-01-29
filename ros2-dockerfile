@@ -9,6 +9,9 @@ RUN apt-get update && apt-get install -y \
     curl \
     tmux \
     libgoogle-glog-dev \
+    gdb \
+    ros-humble-diagnostic-updater \
+    ros-humble-rmw-cyclonedds-cpp \
     && apt-get clean
 
 # 引数としてユーザー情報を受け取る
