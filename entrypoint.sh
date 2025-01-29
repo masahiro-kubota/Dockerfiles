@@ -6,7 +6,7 @@ cd ~/dotfiles
 git pull origin main &> /dev/null
 echo 'export CC=/usr/bin/gcc' >> /home/$USERNAME/.zshrc
 echo 'export CXX=/usr/bin/g++' >> /home/$USERNAME/.zshrc
-echo 'export PROMPT="%F{yellow}[docker]%f %F{green}%n%f:%F{blue}%~%f$ "' >> /home/$USERNAME/.zshrc
+echo 'export PROMPT="%F{yellow}['${CONTAINER_NAME}']%f %F{green}%n%f:%F{blue}%~%f$ "' >> /home/$USERNAME/.zshrc
 
 
 cd /workspace
