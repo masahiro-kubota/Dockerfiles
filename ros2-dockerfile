@@ -29,7 +29,6 @@ RUN groupadd --gid $USER_GID $USERNAME \
 # zsh をデフォルトシェルに設定
 RUN chsh -s /usr/bin/zsh
 
-# 作業ディレクトリを設定
 WORKDIR /home/$USERNAME
 
 USER $USERNAME
@@ -50,9 +49,13 @@ RUN echo 'export PROMPT="%F{yellow}['${CONTAINER_NAME}']%f %F{green}%n%f:%F{blue
 # ROS2設定
 COPY cyclonedds.xml /opt/autoware/cyclonedds.xml
 
+
 # 環境変数を設定 .zshrcに色々書いてるのでENVではなく.zshrcに書き込み
 RUN echo 'export CC=/usr/bin/gcc' >> /home/$USERNAME/.zshrc
 RUN echo 'export CXX=/usr/bin/g++' >> /home/$USERNAME/.zshrc
+
+COPY entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 
 # zsh をデフォルトで起動
 CMD ["zsh"]
