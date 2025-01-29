@@ -1,6 +1,9 @@
-# イメージ名とコンテナ名を変数として定義
-IMAGE_NAME = cpp-ros2-kubota
-CONTAINER_NAME = cpp-ros2-container
+# カレントディレクトリ名を取得
+CURRENT_DIR = $(notdir $(shell pwd))
+
+# イメージ名とコンテナ名をディレクトリ名から設定
+IMAGE_NAME = $(CURRENT_DIR)
+CONTAINER_NAME = $(CURRENT_DIR)-container
 DOCKERFILE_NAME = Dockerfiles/ros2-dockerfile
 
 # ユーザー情報
