@@ -12,3 +12,4 @@ pre-commit
 
 iproute2
 cpplint
+ninja-build

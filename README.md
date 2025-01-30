@@ -5,8 +5,7 @@ ln -s Dockerfiles/Makefile Makefile
 ```
 
 ```
-# add apt packages
-echo <apt-package> >> ~/apt-packages.txt
-apt-install
+# add apt packages in the container
+apt-install <apt-package>
 ```
 
