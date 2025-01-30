@@ -1,0 +1,12 @@
+vim
+zsh
+git
+curl
+tmux
+libgoogle-glog-dev
+gdb
+ros-humble-diagnostic-updater
+ros-humble-rmw-cyclonedds-cpp
+clang-tidy
+pre-commit
+

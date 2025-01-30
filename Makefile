@@ -12,7 +12,7 @@ UID := $(shell id -u)
 GID := $(shell id -g)
 
 # 現在のディレクトリを取得
-WORKSPACE = $(shell pwd)
+PWD = $(shell pwd)
 
 # ビルドターゲット
 build:
@@ -29,11 +29,12 @@ run:
 	@echo "Container Name: $(CONTAINER_NAME)-$(USERNAME)"
 	@echo "Image Name: $(IMAGE_NAME)-$(USERNAME)"
 	@echo "User: $(USERNAME) (UID: $(UID), GID: $(GID))"
-	docker run --rm \
-		-v $(WORKSPACE):/workspace \
+	docker run \
+		-v $(PWD):/workspace \
 		-v ~/.ssh:/home/$(USERNAME)/.ssh:ro \
 		-v ~/.gitconfig:/home/$(USERNAME)/.gitconfig \
 		-v ~/.zsh_history:/home/$(USERNAME)/.zsh_history \
+		-v $(PWD)/Dockerfiles/apt-packages.txt:/home/$(USERNAME)/apt-packages.txt \
 		--name $(CONTAINER_NAME)-$(USERNAME) \
 		--network host \
 		-it $(IMAGE_NAME)-$(USERNAME)
@@ -44,7 +45,7 @@ exec:
 
 # ワークスペースのパーミッション修正
 fix-permissions:
-	sudo chown -R $(UID):$(GID) $(WORKSPACE)
+	sudo chown -R $(UID):$(GID) $(PWD)
 
 # クリーンアップターゲット
 clean:
@@ -63,7 +64,6 @@ help:
 	@echo "  Username: $(USERNAME)"
 	@echo "  UID: $(UID)"
 	@echo "  GID: $(GID)"
-	@echo "  Workspace: $(WORKSPACE)"
 
 # 同名のファイルが存在しても必ず実行される。buildディレクトリがあっても実行される。
 .PHONY: build run exec fix-permissions clean help mkdir-workspace
