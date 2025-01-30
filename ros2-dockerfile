@@ -2,9 +2,9 @@
 FROM osrf/ros:humble-desktop
 
 # 必要なパッケージをインストール
-COPY apt-packages.txt /home/$USERNAME/apt-packages.txt
+COPY apt-packages.txt /home/tmp/apt-packages.txt
 RUN apt-get update && \
-    xargs apt-get install -y --no-install-recommends < /home/$USERNAME/apt-packages.txt
+    xargs apt-get install -y --no-install-recommends < /home/tmp/apt-packages.txt
 
 
 # 引数としてユーザー情報を受け取る
