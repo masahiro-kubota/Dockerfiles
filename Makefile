@@ -43,6 +43,9 @@ run:
 exec:
 	docker exec -it $(CONTAINER_NAME)-$(USERNAME) zsh
 
+rm:
+	docker rm $(CONTAINER_NAME)-$(USERNAME)
+
 # ワークスペースのパーミッション修正
 fix-permissions:
 	sudo chown -R $(UID):$(GID) $(PWD)
