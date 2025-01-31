@@ -43,8 +43,19 @@ run:
 exec:
 	docker exec -it $(CONTAINER_NAME)-$(USERNAME) zsh
 
+kill:
+	docker kill $(CONTAINER_NAME)-$(USERNAME)
+
 rm:
 	docker rm $(CONTAINER_NAME)-$(USERNAME)
+
+start:
+	docker start $(CONTAINER_NAME)-$(USERNAME)
+
+stop:
+	docker stop $(CONTAINER_NAME)-$(USERNAME)
+
+
 
 # ワークスペースのパーミッション修正
 fix-permissions:
