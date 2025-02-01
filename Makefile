@@ -1,16 +1,12 @@
 # カレントディレクトリ名を取得
 CURRENT_DIR = $(notdir $(shell pwd))
-
-# イメージ名とコンテナ名をディレクトリ名から設定
+PWD = $(shell pwd)
 IMAGE_NAME = $(CURRENT_DIR)
 CONTAINER_NAME = $(CURRENT_DIR)-container
 DOCKERFILE_NAME = Dockerfiles/ros2-dockerfile
-
 USERNAME := $(shell whoami)
 UID := $(shell id -u)
 GID := $(shell id -g)
-
-PWD = $(shell pwd)
 
 build:
 	docker build \
