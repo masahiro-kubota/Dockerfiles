@@ -44,4 +44,4 @@ stop:
 	docker stop $(CONTAINER_NAME)-$(USERNAME)
 
 # 同名のファイルが存在しても必ず実行される。buildディレクトリがあっても実行される。
-.PHONY: build run exec fix-permissions clean help mkdir-workspace
+.PHONY: build
