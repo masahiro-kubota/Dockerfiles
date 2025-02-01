@@ -37,16 +37,9 @@ RUN cd dotfiles && chmod +x install.sh && ./install.sh
 WORKDIR /workspace
 RUN sudo chown $USERNAME:$USERNAME /workspace
 
-# Zsh プロンプトをカスタマイズ
-#RUN echo 'export PROMPT="%F{yellow}['${CONTAINER_NAME}']%f %F{green}%n%f:%F{blue}%~%f$ "' >> /home/$USERNAME/.zshrc
-
 # ROS2設定
 COPY cyclonedds.xml /opt/autoware/cyclonedds.xml
-
-
-# 環境変数を設定 .zshrcに色々書いてるのでENVではなく.zshrcに書き込み
-#RUN echo 'export CC=/usr/bin/gcc' >> /home/$USERNAME/.zshrc
-#RUN echo 'export CXX=/usr/bin/g++' >> /home/$USERNAME/.zshrc
+RUN python3 -m pip install --upgrade --user argcomplete
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
