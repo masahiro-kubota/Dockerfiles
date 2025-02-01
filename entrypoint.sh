@@ -3,6 +3,7 @@
 echo "start entrypoint.sh"
 # 環境変数を設定 .zshrcに色々書いてるのでENVではなく.zshrcに書き込み
 cd ~/dotfiles
+git checkout .
 git pull origin main &> /dev/null
 cat >> ~/.zshrc << 'EOL'
 # コンパイラの設定
