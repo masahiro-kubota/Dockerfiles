@@ -13,3 +13,4 @@ ros-humble-rmw-cyclonedds-cpp
 tmux
 vim
 zsh
+clang-format
