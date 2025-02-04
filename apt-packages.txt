@@ -14,3 +14,4 @@ vim
 zsh
 clang-format
 python3-pip
+xsel
