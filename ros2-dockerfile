@@ -37,9 +37,14 @@ RUN cd dotfiles && chmod +x install.sh && ./install.sh
 WORKDIR /workspace
 RUN sudo chown $USERNAME:$USERNAME /workspace
 
+# uvインストール
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+
 # ROS2設定
 COPY cyclonedds.xml /opt/autoware/cyclonedds.xml
-RUN python3 -m pip install --upgrade --user argcomplete
+
+# CI設定
+RUN pip3 install pre-commit
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]

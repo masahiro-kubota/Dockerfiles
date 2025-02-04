@@ -7,10 +7,10 @@ git-lfs
 iproute2
 libgoogle-glog-dev
 ninja-build
-pre-commit
 ros-humble-diagnostic-updater
 ros-humble-rmw-cyclonedds-cpp
 tmux
 vim
 zsh
 clang-format
+python3-pip
