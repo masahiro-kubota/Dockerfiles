@@ -15,3 +15,4 @@ zsh
 clang-format
 python3-pip
 xsel
+wget
