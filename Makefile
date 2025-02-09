@@ -8,8 +8,11 @@ USERNAME := $(shell whoami)
 UID := $(shell id -u)
 GID := $(shell id -g)
 
+DOCKER_BUILD_FLAGS ?=
+
 build:
 	docker build \
+		$(DOCKER_BUILD_FLAGS) \
 		--build-arg USERNAME=$(USERNAME) \
 		--build-arg USER_UID=$(UID) \
 		--build-arg USER_GID=$(GID) \
