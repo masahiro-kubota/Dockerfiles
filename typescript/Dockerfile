@@ -22,11 +22,7 @@ ARG CONTAINER_NAME
 ENV CONTAINER_NAME=${CONTAINER_NAME}
 
 # sudoをインストールしてユーザーとグループを作成
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends sudo && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    groupadd --gid $USER_GID $USERNAME && \
+RUN groupadd --gid $USER_GID $USERNAME && \
     useradd --uid $USER_UID --gid $USER_GID -m $USERNAME && \
     echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME && \
     chmod 0440 /etc/sudoers.d/$USERNAME
