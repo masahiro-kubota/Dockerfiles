@@ -1,0 +1,103 @@
+{
+  "name": "ROS2 Development Container",
+  "build": {
+    "dockerfile": "../Dockerfiles/ros2/Dockerfile",
+    "args": {
+      "USERNAME": "${localEnv:USER}",
+      "USER_UID": "${localEnv:UID:-1000}",
+      "USER_GID": "${localEnv:GID:-1000}",
+      "CONTAINER_NAME": "${localWorkspaceFolderBasename}-ros2"
+    }
+  },
+  "runArgs": [
+    "--rm",
+    "--privileged",
+    "--network=host",
+    "--ipc=host",
+    "--pid=host"
+  ],
+  "mounts": [
+    {
+      "source": "${localEnv:HOME}/.ssh",
+      "target": "/home/${localEnv:USER}/.ssh",
+      "type": "bind",
+      "readonly": true
+    },
+    {
+      "source": "${localEnv:HOME}/.gitconfig",
+      "target": "/home/${localEnv:USER}/.gitconfig",
+      "type": "bind"
+    },
+    {
+      "source": "${localEnv:HOME}/.zsh_history",
+      "target": "/home/${localEnv:USER}/.zsh_history",
+      "type": "bind"
+    },
+    {
+      "source": "${localWorkspaceFolder}/ros2/apt-packages.txt",
+      "target": "/home/${localEnv:USER}/apt-packages.txt",
+      "type": "bind"
+    }
+  ],
+  "containerEnv": {
+    "DISPLAY": "${localEnv:DISPLAY}",
+    "TERM": "xterm-256color"
+  },
+  "remoteUser": "${localEnv:USER}",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "/bin/zsh"
+          }
+        },
+        "editor.formatOnSave": true,
+        "editor.formatOnPaste": true,
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true,
+        "files.trimFinalNewlines": true,
+        "ros.distro": "humble",
+        "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+        "C_Cpp.formatting": "clangFormat",
+        "C_Cpp.clang_format_style": "Google",
+        "python.defaultInterpreterPath": "/usr/bin/python3",
+        "python.formatting.provider": "black",
+        "python.linting.enabled": true,
+        "python.linting.ruffEnabled": true,
+        "cmake.configureOnOpen": false
+      },
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "mutantdino.resourcemonitor",
+        "editorconfig.editorconfig",
+        "usernamehw.errorlens",
+        "mhutchie.git-graph",
+        "donjayamanne.githistory",
+        "eamodio.gitlens",
+        "yzhang.markdown-all-in-one",
+        "bierner.markdown-mermaid",
+        "davidanson.vscode-markdownlint",
+        "esbenp.prettier-vscode",
+        "gruntfuggly.todo-tree",
+        "shardulm94.trailing-spaces",
+        "stkb.rewrap",
+        "wayou.vscode-todo-highlight",
+        "mosapride.zenkaku",
+        "ms-iot.vscode-ros",
+        "ajshort.ros-snippets",
+        "DotJoshJohnson.xml",
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "twxs.cmake",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.black-formatter",
+        "charliermarsh.ruff"
+      ]
+    }
+  }
+}
