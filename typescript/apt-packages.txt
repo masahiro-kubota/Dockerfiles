@@ -9,3 +9,4 @@ xsel
 python3-pip
 build-essential
 psmisc
+gh

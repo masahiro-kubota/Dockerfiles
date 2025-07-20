@@ -79,6 +79,9 @@
   },
   "remoteUser": "masa",
   "updateRemoteUserUID": true,
+  "remoteEnv": {
+    "GH_TOKEN": "${localEnv:GH_TOKEN}"
+  },
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
   "workspaceFolder": "/workspace",
   "customizations": {

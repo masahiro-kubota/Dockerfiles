@@ -3,6 +3,7 @@ FROM osrf/ros:humble-desktop
 
 # 必要なパッケージをインストール
 COPY apt-packages.txt /home/tmp/apt-packages.txt
+
 RUN apt-get update && \
     xargs apt-get install -y --no-install-recommends < /home/tmp/apt-packages.txt && \
     apt-get clean && \
