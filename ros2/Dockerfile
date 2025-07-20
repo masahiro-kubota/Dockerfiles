@@ -4,8 +4,9 @@ FROM osrf/ros:humble-desktop
 # 必要なパッケージをインストール
 COPY apt-packages.txt /home/tmp/apt-packages.txt
 RUN apt-get update && \
-    xargs apt-get install -y --no-install-recommends < /home/tmp/apt-packages.txt
-
+    xargs apt-get install -y --no-install-recommends < /home/tmp/apt-packages.txt && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # 引数としてユーザー情報を受け取る
 ARG USERNAME
@@ -30,7 +31,6 @@ RUN git clone https://github.com/masahiro-kubota/dotfiles.git
 # dotfiles ディレクトリに移動して install.sh を実行
 WORKDIR /home/$USERNAME/dotfiles
 RUN ./install.sh
-RUN ls -al /home/masa
 
 # 作業ディレクトリを /workspace に設定
 WORKDIR /workspace

@@ -1,0 +1,11 @@
+curl
+git
+git-lfs
+vim
+zsh
+tmux
+wget
+xsel
+python3-pip
+build-essential
+psmisc
