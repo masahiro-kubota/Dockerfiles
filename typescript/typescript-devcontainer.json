@@ -21,6 +21,18 @@
   },
   "mounts": [
     {
+      "source": "${localEnv:HOME}/.config/gh",
+      "target": "/home/${localEnv:USER}/.config/gh",
+      "type": "bind",
+      "readonly": true
+    },
+    {
+      "source": "${localEnv:HOME}/.gitconfig",
+      "target": "/home/${localEnv:USER}/.gitconfig",
+      "type": "bind",
+      "readonly": true
+    },
+    {
       "source": "${localEnv:HOME}/.ssh",
       "target": "/home/${localEnv:USER}/.ssh",
       "type": "bind",
