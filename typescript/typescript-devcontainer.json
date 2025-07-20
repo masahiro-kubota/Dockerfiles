@@ -16,6 +16,9 @@
     "--ipc=host",
     "--pid=host"
   ],
+  "features": {
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
+  },
   "mounts": [
     {
       "source": "${localEnv:HOME}/.ssh",
@@ -37,6 +40,25 @@
       "source": "${localWorkspaceFolder}/Dockerfiles/typescript/apt-packages.txt",
       "target": "/home/${localEnv:USER}/apt-packages.txt",
       "type": "bind"
+    },
+    {
+      "source": "claude-code-bashhistory-${devcontainerId}",
+      "target": "/commandhistory",
+      "type": "volume"
+    },
+    {
+      "source": "${localEnv:HOME}/.claude",
+      "target": "/home/${localEnv:USER}/.claude",
+      "consistency": "cached",
+      "type": "bind",
+      "readonly": true
+    },
+    {
+      "source": "${localEnv:HOME}/.claude.json",
+      "target": "/home/${localEnv:USER}/.claude.json",
+      "type": "bind",
+      "consistency": "cached",
+      "readonly": true
     }
   ],
   "containerEnv": {
