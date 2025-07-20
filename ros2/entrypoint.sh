@@ -1,7 +1,7 @@
-#!/bin/zsh
+#!/bin/bash
 
 echo "start entrypoint.sh"
-cd ~/dotfiles
+cd ~/dotfiles || exit
 git pull origin main
 
 # ホストとdockerコンテナ内でprefixを変更する。
@@ -26,6 +26,6 @@ apt-add-install() {
 alias apt-install='apt-add-install'
 EOL
 
-cd /workspace
+cd /workspace || exit
 
 exec "$@"

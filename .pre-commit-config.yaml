@@ -1,0 +1,48 @@
+# See https://pre-commit.com for more information
+repos:
+  # 一般的なチェック
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
+
+  # Dockerfile用のリンター
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.12.0
+    hooks:
+      - id: hadolint-docker
+        name: Lint Dockerfiles
+        entry: hadolint/hadolint:v2.12.0 hadolint
+        language: docker_image
+        types: ["dockerfile"]
+        files: Dockerfile$
+
+  # シェルスクリプト用のリンター
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.9.0.6
+    hooks:
+      - id: shellcheck
+        name: Shellcheck
+        types: [shell]
+        args: ["-x"]
+        files: \.(sh|bash|zsh)$
+
+  # Markdown用のリンター
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.39.0
+    hooks:
+      - id: markdownlint
+        args: ["--fix"]
+
+  # YAML/JSON/Markdown用のフォーマッター
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.1.0
+    hooks:
+      - id: prettier
+        types_or: [yaml, markdown, json]

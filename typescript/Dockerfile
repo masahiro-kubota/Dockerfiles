@@ -9,8 +9,9 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Node.jsのインストール（NodeSource経由）
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt-get install -y nodejs && \
+    apt-get install -y --no-install-recommends nodejs=20.* && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -21,11 +22,9 @@ ARG USER_GID
 ARG CONTAINER_NAME
 ENV CONTAINER_NAME=${CONTAINER_NAME}
 
-# sudoをインストールしてユーザーとグループを作成
+# ユーザーとグループを作成
 RUN groupadd --gid $USER_GID $USERNAME && \
-    useradd --uid $USER_UID --gid $USER_GID -m $USERNAME && \
-    echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME && \
-    chmod 0440 /etc/sudoers.d/$USERNAME
+    useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
 
 WORKDIR /home/$USERNAME
 
@@ -39,11 +38,15 @@ WORKDIR /home/$USERNAME/dotfiles
 RUN ./install.sh
 
 # 作業ディレクトリを /workspace に設定
+USER root
+RUN mkdir -p /workspace && chown $USERNAME:$USERNAME /workspace
+USER $USERNAME
 WORKDIR /workspace
-RUN sudo chown $USERNAME:$USERNAME /workspace
 
 # Node.js グローバルパッケージのインストール
-RUN sudo npm install -g typescript ts-node @types/node yarn pnpm
+USER root
+RUN npm install -g typescript ts-node @types/node yarn pnpm
+USER $USERNAME
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]

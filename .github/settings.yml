@@ -1,0 +1,60 @@
+# .github/settings.yml
+# Probot Settings App用の設定ファイル
+# https://github.com/apps/settings をリポジトリにインストールしてください
+
+repository:
+  # リポジトリ基本設定
+  name: Dockerfiles
+  description: Docker development environments for ROS2 and TypeScript
+  private: false
+  default_branch: main
+
+  # マージ方法の設定
+  allow_squash_merge: true # スカッシュマージを許可
+  allow_merge_commit: true # マージコミットを許可
+  allow_rebase_merge: true # リベースマージを許可
+
+  # 機能の有効/無効
+  has_issues: true
+  has_projects: false
+  has_wiki: false
+
+  # マージ後の自動削除
+  delete_branch_on_merge: true
+
+# ブランチ保護ルール
+branches:
+  - name: main
+    protection:
+      # PRレビュー必須設定（個人リポジトリの場合は null に設定）
+      required_pull_request_reviews: null
+
+      # ステータスチェック（CI/CD）
+      required_status_checks:
+        strict: true # マージ前に最新の状態でチェック必須
+        contexts: # 必要なCIジョブ名
+          - "pre-commit"
+
+      # 基本的な保護設定
+      enforce_admins: false # 管理者も保護ルールを守る
+      required_linear_history: false # リニアな履歴は必須としない
+      allow_force_pushes: false # 強制プッシュ禁止
+      allow_deletions: false # ブランチ削除禁止
+
+# ラベル設定
+labels:
+  - name: bug
+    color: d73a4a
+    description: Something isn't working
+  - name: enhancement
+    color: a2eeef
+    description: New feature or request
+  - name: documentation
+    color: 0075ca
+    description: Improvements or additions to documentation
+  - name: dependencies
+    color: 0366d6
+    description: Pull requests that update a dependency file
+  - name: docker
+    color: 2188ff
+    description: Docker related changes
