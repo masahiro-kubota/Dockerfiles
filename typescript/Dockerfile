@@ -5,6 +5,7 @@ FROM ubuntu:22.04
 COPY apt-packages.txt /home/tmp/apt-packages.txt
 RUN apt-get update && \
     xargs apt-get install -y --no-install-recommends < /home/tmp/apt-packages.txt && \
+    apt-get install -y --no-install-recommends sudo && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -24,7 +25,8 @@ ENV CONTAINER_NAME=${CONTAINER_NAME}
 
 # ユーザーとグループを作成
 RUN groupadd --gid $USER_GID $USERNAME && \
-    useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
+  useradd --uid $USER_UID --gid $USER_GID -m $USERNAME && \
+  echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 WORKDIR /home/$USERNAME
 

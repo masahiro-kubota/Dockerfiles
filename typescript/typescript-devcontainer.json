@@ -152,5 +152,6 @@
         "kavod-io.vscode-jest-test-adapter"
       ]
     }
-  }
+  },
+  "postCreateCommand": "/workspace/Dockerfiles/typescript/entrypoint.sh"
 }
