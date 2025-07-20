@@ -34,7 +34,7 @@
       "type": "bind"
     },
     {
-      "source": "${localWorkspaceFolder}/typescript/apt-packages.txt",
+      "source": "${localWorkspaceFolder}/Dockerfiles/typescript/apt-packages.txt",
       "target": "/home/${localEnv:USER}/apt-packages.txt",
       "type": "bind"
     }
