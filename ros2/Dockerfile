@@ -33,14 +33,16 @@ WORKDIR /home/$USERNAME/dotfiles
 RUN ./install.sh
 
 # 作業ディレクトリを /workspace に設定
+USER root
+RUN mkdir -p /workspace && chown $USERNAME:$USERNAME /workspace
+USER $USERNAME
 WORKDIR /workspace
-RUN sudo chown $USERNAME:$USERNAME /workspace
 
 # ROS2設定
 COPY cyclonedds.xml /opt/autoware/cyclonedds.xml
 
 # CI設定
-RUN pip3 install pre-commit
+RUN pip3 install --no-cache-dir pre-commit==3.5.0
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
