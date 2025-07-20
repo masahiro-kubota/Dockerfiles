@@ -46,4 +46,3 @@ repos:
     hooks:
       - id: prettier
         types_or: [yaml, markdown, json]
-        exclude: ^.pre-commit-config.yaml$

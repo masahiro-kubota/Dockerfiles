@@ -11,7 +11,6 @@ RUN apt-get update && \
 # Node.jsのインストール（NodeSource経由）
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt-get install -y --no-install-recommends sudo && \
     apt-get install -y --no-install-recommends nodejs && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -23,11 +22,9 @@ ARG USER_GID
 ARG CONTAINER_NAME
 ENV CONTAINER_NAME=${CONTAINER_NAME}
 
-# sudoをインストールしてユーザーとグループを作成
+# ユーザーとグループを作成
 RUN groupadd --gid $USER_GID $USERNAME && \
-    useradd --uid $USER_UID --gid $USER_GID -m $USERNAME && \
-    echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME && \
-    chmod 0440 /etc/sudoers.d/$USERNAME
+    useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
 
 WORKDIR /home/$USERNAME
 
