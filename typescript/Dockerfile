@@ -1,5 +1,4 @@
-# ベースイメージを指定
-FROM ubuntu:22.04
+FROM buildpack-deps:22.04
 
 # 必要なパッケージをインストール
 COPY apt-packages.txt /home/tmp/apt-packages.txt
