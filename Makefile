@@ -74,6 +74,20 @@ set-target:
 show-target:
 	@echo "Current DOCKER_TARGET: $(DOCKER_TARGET)"
 
+# devcontainer設定のシンボリックリンクを作成
+setup-devcontainer:
+	@if [ -z "$(filter-out setup-devcontainer,$(MAKECMDGOALS))" ]; then \
+		echo "Usage: make setup-devcontainer ros2    # or typescript"; \
+	else \
+		TARGET=$(filter-out setup-devcontainer,$(MAKECMDGOALS)); \
+		mkdir -p "$(PWD)/.devcontainer"; \
+		if [ -L "$(PWD)/.devcontainer/devcontainer.json" ]; then \
+			rm "$(PWD)/.devcontainer/devcontainer.json"; \
+		fi; \
+		ln -sf "../Dockerfiles/$$TARGET/$$TARGET-devcontainer.json" "$(PWD)/.devcontainer/devcontainer.json"; \
+		echo "Created symlink: .devcontainer/devcontainer.json -> Dockerfiles/$$TARGET/$$TARGET-devcontainer.json"; \
+	fi
+
 # ヘルプメッセージ
 help:
 	@echo "Usage: make [command] [DOCKER_TARGET=ros2|typescript]"
@@ -86,17 +100,22 @@ help:
 	@echo "  rm          - Remove container"
 	@echo "  start       - Start stopped container"
 	@echo "  stop        - Stop running container"
-	@echo "  set-target  - Set default DOCKER_TARGET (ros2 or typescript)"
-	@echo "  show-target - Show current DOCKER_TARGET"
+	@echo "  set-target        - Set default DOCKER_TARGET (ros2 or typescript)"
+	@echo "  show-target       - Show current DOCKER_TARGET"
+	@echo "  setup-devcontainer - Setup devcontainer configuration symlink"
 	@echo ""
 	@echo "Setting default DOCKER_TARGET:"
 	@echo "  make set-target ros2        # Set default to ROS2"
 	@echo "  make set-target typescript  # Set default to TypeScript"
 	@echo ""
+	@echo "Setting up devcontainer:"
+	@echo "  make setup-devcontainer ros2        # Setup for ROS2 development"
+	@echo "  make setup-devcontainer typescript  # Setup for TypeScript development"
+	@echo ""
 	@echo "Current DOCKER_TARGET: $(DOCKER_TARGET)"
 
 # 同名のファイルが存在しても必ず実行される。buildディレクトリがあっても実行される。
-.PHONY: build run exec kill rm start stop help set-target show-target
+.PHONY: build run exec kill rm start stop help set-target show-target setup-devcontainer
 
 # set-targetの引数を処理
 ros2 typescript:

@@ -1,0 +1,156 @@
+{
+  "name": "TypeScript Development Container",
+  "build": {
+    "dockerfile": "../Dockerfiles/typescript/Dockerfile",
+    "args": {
+      "CONTAINER_NAME": "typescript-devcontainer",
+      "USERNAME": "masa",
+      "USER_UID": "1000",
+      "USER_GID": "1000"
+    }
+  },
+  "runArgs": [
+    "--rm",
+    "--privileged",
+    "--network=host",
+    "--ipc=host",
+    "--pid=host"
+  ],
+  "features": {
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
+  },
+  "mounts": [
+    {
+      "source": "${localEnv:HOME}/.ssh",
+      "target": "/home/${localEnv:USER}/.ssh",
+      "type": "bind",
+      "readonly": true
+    },
+    {
+      "source": "${localEnv:HOME}/.gitconfig",
+      "target": "/home/${localEnv:USER}/.gitconfig",
+      "type": "bind"
+    },
+    {
+      "source": "${localEnv:HOME}/.zsh_history",
+      "target": "/home/${localEnv:USER}/.zsh_history",
+      "type": "bind"
+    },
+    {
+      "source": "${localWorkspaceFolder}/Dockerfiles/typescript/apt-packages.txt",
+      "target": "/home/${localEnv:USER}/apt-packages.txt",
+      "type": "bind"
+    },
+    {
+      "source": "claude-code-bashhistory-${devcontainerId}",
+      "target": "/commandhistory",
+      "type": "volume"
+    },
+    {
+      "source": "${localEnv:HOME}/.claude",
+      "target": "/home/${localEnv:USER}/.claude",
+      "consistency": "cached",
+      "type": "bind",
+      "readonly": true
+    },
+    {
+      "source": "${localEnv:HOME}/.claude.json",
+      "target": "/home/${localEnv:USER}/.claude.json",
+      "type": "bind",
+      "consistency": "cached",
+      "readonly": true
+    }
+  ],
+  "containerEnv": {
+    "DISPLAY": "${localEnv:DISPLAY}",
+    "TERM": "xterm-256color"
+  },
+  "remoteUser": "masa",
+  "updateRemoteUserUID": true,
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "/bin/zsh"
+          }
+        },
+        "editor.formatOnSave": true,
+        "editor.formatOnPaste": true,
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true,
+        "files.trimFinalNewlines": true,
+        "typescript.updateImportsOnFileMove.enabled": "always",
+        "javascript.updateImportsOnFileMove.enabled": "always",
+        "typescript.preferences.importModuleSpecifier": "relative",
+        "typescript.preferences.includePackageJsonAutoImports": "on",
+        "eslint.validate": [
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact"
+        ],
+        "eslint.format.enable": true,
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit"
+        },
+        "[javascript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[javascriptreact]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[typescriptreact]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[jsonc]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "npm.enableRunFromFolder": true,
+        "npm.scriptExplorerAction": "run"
+      },
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "mutantdino.resourcemonitor",
+        "editorconfig.editorconfig",
+        "usernamehw.errorlens",
+        "mhutchie.git-graph",
+        "donjayamanne.githistory",
+        "eamodio.gitlens",
+        "yzhang.markdown-all-in-one",
+        "bierner.markdown-mermaid",
+        "davidanson.vscode-markdownlint",
+        "esbenp.prettier-vscode",
+        "gruntfuggly.todo-tree",
+        "shardulm94.trailing-spaces",
+        "stkb.rewrap",
+        "wayou.vscode-todo-highlight",
+        "mosapride.zenkaku",
+        "dbaeumer.vscode-eslint",
+        "streetsidesoftware.code-spell-checker",
+        "wix.vscode-import-cost",
+        "christian-kohler.path-intellisense",
+        "christian-kohler.npm-intellisense",
+        "eg2.vscode-npm-script",
+        "jasonnutter.search-node-modules",
+        "xabikos.javascriptsnippets",
+        "dsznajder.es7-react-js-snippets",
+        "burkeholland.simple-react-snippets",
+        "jpoissonnier.vscode-styled-components",
+        "msjsdiag.debugger-for-chrome",
+        "msjsdiag.vscode-react-native",
+        "orta.vscode-jest",
+        "kavod-io.vscode-jest-test-adapter"
+      ]
+    }
+  }
+}
