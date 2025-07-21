@@ -21,6 +21,18 @@
   },
   "mounts": [
     {
+      "source": "${localEnv:HOME}/.config/gh",
+      "target": "/home/${localEnv:USER}/.config/gh",
+      "type": "bind",
+      "readonly": true
+    },
+    {
+      "source": "${localEnv:HOME}/.gitconfig",
+      "target": "/home/${localEnv:USER}/.gitconfig",
+      "type": "bind",
+      "readonly": true
+    },
+    {
       "source": "${localEnv:HOME}/.ssh",
       "target": "/home/${localEnv:USER}/.ssh",
       "type": "bind",
@@ -67,6 +79,9 @@
   },
   "remoteUser": "masa",
   "updateRemoteUserUID": true,
+  "remoteEnv": {
+    "GH_TOKEN": "${localEnv:GH_TOKEN}"
+  },
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
   "workspaceFolder": "/workspace",
   "customizations": {
@@ -152,5 +167,6 @@
         "kavod-io.vscode-jest-test-adapter"
       ]
     }
-  }
+  },
+  "postCreateCommand": "/workspace/Dockerfiles/typescript/entrypoint.sh"
 }
