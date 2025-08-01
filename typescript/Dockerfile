@@ -45,7 +45,7 @@ WORKDIR /workspace
 
 # Node.js グローバルパッケージのインストール
 USER root
-RUN npm install -g typescript ts-node @types/node yarn pnpm @anthropic-ai/claude-code
+RUN npm install -g typescript ts-node @types/node yarn pnpm @anthropic-ai/claude-code@1.0.24
 USER $USERNAME
 
 COPY entrypoint.sh /entrypoint.sh
