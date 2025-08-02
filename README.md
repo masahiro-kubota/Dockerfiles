@@ -1,3 +1,5 @@
+Dockerfileとかentrypoint.shをルートにもってくるようにmakeを変えたい。
+
 # Dockerfiles
 
 ## Setup
