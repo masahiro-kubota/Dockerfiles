@@ -1,4 +1,5 @@
 Dockerfileとかentrypoint.shをルートにもってくるようにmakeを変えたい。
+.Dockerfilesでコピーするようにしたい。
 
 # Dockerfiles
 
