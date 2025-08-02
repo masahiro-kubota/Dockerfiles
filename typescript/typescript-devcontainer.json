@@ -18,6 +18,11 @@
   ],
   "mounts": [
     {
+      "source": "${localWorkspaceFolder}/..",
+      "target": "/workspace",
+      "type": "bind"
+    },
+    {
       "source": "${localEnv:HOME}/.config/gh",
       "target": "/home/${localEnv:USER}/.config/gh",
       "type": "bind",
@@ -79,8 +84,8 @@
   "remoteEnv": {
     "GH_TOKEN": "${localEnv:GH_TOKEN}"
   },
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
-  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace/main,type=bind",
+  "workspaceFolder": "/workspace/main",
   "customizations": {
     "vscode": {
       "settings": {
@@ -165,5 +170,5 @@
       ]
     }
   },
-  "postCreateCommand": "/workspace/Dockerfiles/typescript/entrypoint.sh"
+  "postCreateCommand": "/workspace/main/Dockerfiles/typescript/entrypoint.sh"
 }
