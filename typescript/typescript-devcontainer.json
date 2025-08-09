@@ -1,7 +1,7 @@
 {
   "name": "TypeScript Development Container",
   "build": {
-    "dockerfile": "../Dockerfiles/typescript/Dockerfile",
+    "dockerfile": "../Dockerfile",
     "args": {
       "CONTAINER_NAME": "typescript-devcontainer",
       "USERNAME": "masa",

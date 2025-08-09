@@ -80,6 +80,7 @@ setup-devcontainer:
 		echo "Usage: make setup-devcontainer ros2    # or typescript"; \
 	else \
 		TARGET=$(filter-out setup-devcontainer,$(MAKECMDGOALS)); \
+		ln -sf "$(PWD)/Dockerfiles/$$TARGET/Dockerfile" "$(PWD)/Dockerfile"; \
 		mkdir -p "$(PWD)/.devcontainer"; \
 		if [ -L "$(PWD)/.devcontainer/devcontainer.json" ]; then \
 			rm "$(PWD)/.devcontainer/devcontainer.json"; \
