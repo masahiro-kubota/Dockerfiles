@@ -16,11 +16,11 @@ DOCKER_TARGET ?= ros2
 ifeq ($(DOCKER_TARGET),ros2)
 	DOCKERFILE_PATH = Dockerfiles/ros2/Dockerfile
 	DOCKERFILE_DIR = Dockerfiles/ros2
-	APT_PACKAGES_PATH = $(PWD)/Dockerfiles/ros2/apt-packages.txt
+	APT_PACKAGES_PATH = Dockerfiles/ros2/apt-packages.txt
 else ifeq ($(DOCKER_TARGET),typescript)
 	DOCKERFILE_PATH = Dockerfiles/typescript/Dockerfile
 	DOCKERFILE_DIR = Dockerfiles/typescript
-	APT_PACKAGES_PATH = $(PWD)/Dockerfiles/typescript/apt-packages.txt
+	APT_PACKAGES_PATH = Dockerfiles/typescript/apt-packages.txt
 endif
 
 DOCKER_BUILD_FLAGS ?=
@@ -80,12 +80,14 @@ setup-devcontainer:
 		echo "Usage: make setup-devcontainer ros2    # or typescript"; \
 	else \
 		TARGET=$(filter-out setup-devcontainer,$(MAKECMDGOALS)); \
-		ln -sf "$(PWD)/Dockerfiles/$$TARGET/Dockerfile" "$(PWD)/Dockerfile"; \
-		mkdir -p "$(PWD)/.devcontainer"; \
-		if [ -L "$(PWD)/.devcontainer/devcontainer.json" ]; then \
-			rm "$(PWD)/.devcontainer/devcontainer.json"; \
+		ln -s "Dockerfiles/$$TARGET/Dockerfile" "Dockerfile"; \
+		ln -s "Dockerfiles/$$TARGET/apt-packages.txt" "apt-packages.txt"; \
+		ln -s "Dockerfiles/$$TARGET/entrypoint.sh" "entrypoint.sh"; \
+		mkdir -p ".devcontainer"; \
+		if [ -L ".devcontainer/devcontainer.json" ]; then \
+			rm ".devcontainer/devcontainer.json"; \
 		fi; \
-		ln -sf "../Dockerfiles/$$TARGET/$$TARGET-devcontainer.json" "$(PWD)/.devcontainer/devcontainer.json"; \
+		ln -s "../Dockerfiles/$$TARGET/$$TARGET-devcontainer.json" ".devcontainer/devcontainer.json"; \
 		echo "Created symlink: .devcontainer/devcontainer.json -> Dockerfiles/$$TARGET/$$TARGET-devcontainer.json"; \
 	fi
 
