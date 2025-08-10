@@ -6,8 +6,8 @@ Dockerfileとかentrypoint.shをルートにもってくるようにmakeを変�
 ## Setup
 
 ```bash
-git clone git@github.com:masahiro-kubota/Dockerfiles.git
-ln -s Dockerfiles/Makefile Makefile
+git clone git@github.com:masahiro-kubota/Dockerfiles.git .Dockerfiles
+ln -s .Dockerfiles/Makefile Makefile
 ```
 
 ### For devcontainer development
