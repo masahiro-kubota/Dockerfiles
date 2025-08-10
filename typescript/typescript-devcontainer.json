@@ -46,7 +46,7 @@
       "type": "bind"
     },
     {
-      "source": "${localWorkspaceFolder}/Dockerfiles/typescript/apt-packages.txt",
+      "source": "${localWorkspaceFolder}/apt-packages.txt",
       "target": "/home/${localEnv:USER}/apt-packages.txt",
       "type": "bind"
     },
@@ -79,7 +79,7 @@
   "remoteEnv": {
     "GH_TOKEN": "${localEnv:GH_TOKEN}"
   },
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace/main,type=bind",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace/,type=bind",
   "workspaceFolder": "/workspace/main",
   "customizations": {
     "vscode": {
@@ -165,5 +165,5 @@
       ]
     }
   },
-  "postCreateCommand": "/workspace/main/Dockerfiles/typescript/entrypoint.sh"
+  "postCreateCommand": "/workspace/main/entrypoint.sh"
 }
