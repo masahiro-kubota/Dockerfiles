@@ -1,7 +1,7 @@
 {
   "name": "TypeScript Development Container",
   "build": {
-    "dockerfile": "../Dockerfiles/typescript/Dockerfile",
+    "dockerfile": "../Dockerfile",
     "args": {
       "CONTAINER_NAME": "typescript-devcontainer",
       "USERNAME": "masa",
@@ -46,7 +46,7 @@
       "type": "bind"
     },
     {
-      "source": "${localWorkspaceFolder}/Dockerfiles/typescript/apt-packages.txt",
+      "source": "${localWorkspaceFolder}/apt-packages.txt",
       "target": "/home/${localEnv:USER}/apt-packages.txt",
       "type": "bind"
     },
@@ -165,5 +165,5 @@
       ]
     }
   },
-  "postCreateCommand": "/workspace/main/Dockerfiles/typescript/entrypoint.sh"
+  "postCreateCommand": "/workspace/main/entrypoint.sh"
 }
