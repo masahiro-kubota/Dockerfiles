@@ -79,7 +79,7 @@
   "remoteEnv": {
     "GH_TOKEN": "${localEnv:GH_TOKEN}"
   },
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace/,type=bind",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace/main,type=bind",
   "workspaceFolder": "/workspace/main",
   "customizations": {
     "vscode": {
