@@ -1,1 +1,0 @@
-/Users/masa/Documents/docker-test/Dockerfiles/Dockerfiles/typescript/Dockerfile
