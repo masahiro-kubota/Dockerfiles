@@ -13,7 +13,7 @@ ARG USER_GID
 ARG CONTAINER_NAME
 ENV CONTAINER_NAME=${CONTAINER_NAME}
 
-RUN groupadd --gid $USER_GID $USERNAME \
+RUN if ! getent group $USER_GID; then groupadd --gid $USER_GID $USERNAME; fi \
  && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
  && echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
@@ -27,7 +27,7 @@ RUN ./install.sh
 
 # 作業ディレクトリ
 USER root
-RUN mkdir -p /workspace && chown $USERNAME:$USERNAME /workspace
+RUN mkdir -p /workspace && chown $USER_UID:$USER_UID /workspace
 USER $USERNAME
 WORKDIR /workspace
 

@@ -8,6 +8,9 @@ Dockerfileとかentrypoint.shをルートにもってくるようにmakeを変�
 ```bash
 git clone git@github.com:masahiro-kubota/Dockerfiles.git .Dockerfiles
 ln -s .Dockerfiles/Makefile Makefile
+ln -s .Dockerfiles/Dockerfile.claude Dockerfile.claude
+ln -s .Dockerfiles/Dockerfile.typescript Dockerfile.typescript
+ln -s .Dockerfiles/typescript/entrypoint.sh entrypoint.sh
 ```
 
 ### For devcontainer development

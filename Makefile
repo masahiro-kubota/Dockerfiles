@@ -14,13 +14,17 @@ DOCKER_TARGET ?= ros2
 
 # Dockerfileのパスを設定
 ifeq ($(DOCKER_TARGET),ros2)
-	DOCKERFILE_PATH = .Dockerfiles/ros2/Dockerfile
-	DOCKERFILE_DIR = .Dockerfiles/ros2
+	DOCKERFILE_PATH = $(PWD)/.Dockerfiles/ros2/Dockerfile
+	DOCKERFILE_DIR = $(PWD)/.Dockerfiles/ros2
 	APT_PACKAGES_PATH = $(PWD)/.Dockerfiles/ros2/apt-packages.txt
 else ifeq ($(DOCKER_TARGET),typescript)
-	DOCKERFILE_PATH = .Dockerfiles/typescript/Dockerfile
-	DOCKERFILE_DIR = .Dockerfiles/typescript
+	DOCKERFILE_PATH = $(PWD)/.Dockerfiles/Dockerfile.typescript
+	DOCKERFILE_DIR = $(PWD)/.Dockerfiles
 	APT_PACKAGES_PATH = $(PWD)/.Dockerfiles/typescript/apt-packages.txt
+else ifeq ($(DOCKER_TARGET),claude)
+  DOCKERFILE_PATH = $(PWD)/Dockerfile.claude
+  DOCKERFILE_DIR = $(PWD)
+  APT_PACKAGES_PATH = $(PWD)/.Dockerfiles/apt-packages.txt
 endif
 
 DOCKER_BUILD_FLAGS ?=
