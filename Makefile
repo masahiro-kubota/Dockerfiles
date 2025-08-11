@@ -16,11 +16,11 @@ DOCKER_TARGET ?= ros2
 ifeq ($(DOCKER_TARGET),ros2)
 	DOCKERFILE_PATH = .Dockerfiles/ros2/Dockerfile
 	DOCKERFILE_DIR = .Dockerfiles/ros2
-	APT_PACKAGES_PATH = .Dockerfiles/ros2/apt-packages.txt
+	APT_PACKAGES_PATH = $(PWD)/.Dockerfiles/ros2/apt-packages.txt
 else ifeq ($(DOCKER_TARGET),typescript)
 	DOCKERFILE_PATH = .Dockerfiles/typescript/Dockerfile
 	DOCKERFILE_DIR = .Dockerfiles/typescript
-	APT_PACKAGES_PATH = .Dockerfiles/typescript/apt-packages.txt
+	APT_PACKAGES_PATH = $(PWD)/.Dockerfiles/typescript/apt-packages.txt
 endif
 
 DOCKER_BUILD_FLAGS ?=
