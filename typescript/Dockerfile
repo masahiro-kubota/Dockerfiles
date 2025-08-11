@@ -21,10 +21,10 @@ ARG USER_GID
 ARG CONTAINER_NAME
 ENV CONTAINER_NAME=${CONTAINER_NAME}
 
-# ユーザーとグループを作成
-RUN groupadd --gid $USER_GID $USERNAME && \
-  useradd --uid $USER_UID --gid $USER_GID -m $USERNAME && \
-  echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+# グループが存在しない場合は作成し、ユーザーを作成
+RUN if ! getent group $USER_GID; then groupadd --gid $USER_GID $USERNAME; fi && \
+    useradd --uid $USER_UID --gid $USER_GID -m $USERNAME && \
+    echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 WORKDIR /home/$USERNAME
 
@@ -39,7 +39,7 @@ RUN ./install.sh
 
 # 作業ディレクトリを /workspace に設定
 USER root
-RUN mkdir -p /workspace && chown $USERNAME:$USERNAME /workspace
+RUN mkdir -p /workspace && chown $USER_UID:$USER_GID /workspace
 USER $USERNAME
 WORKDIR /workspace
 
