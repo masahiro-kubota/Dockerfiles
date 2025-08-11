@@ -1,0 +1,24 @@
+services:
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile.agent
+      tags:
+        - local/agent:latest
+    volumes:
+      - .:/work
+    profiles: ["agent"]
+    tty: true
+
+  agent-ros2:
+    build:
+      context: .
+      dockerfile: Dockerfile.ros2
+    volumes:
+      - .:/work
+      - /dev:/dev              # デバイス触るなら
+    network_mode: host         # RViz/ROS通信用に必要なら
+    ipc: host
+    privileged: true           # シリアル等使うなら
+    profiles: ["full"]
+    tty: true
