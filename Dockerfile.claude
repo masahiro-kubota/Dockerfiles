@@ -25,7 +25,7 @@ RUN ./install.sh
 USER root
 RUN mkdir -p /workspace && chown $USER_UID:$USER_UID /workspace
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
- && apt-get install -y --no-install-recommends nodejs=20.* 
+ && apt-get install -y --no-install-recommends nodejs=20.*
 
 RUN npm install -g \
     typescript \

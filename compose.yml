@@ -52,5 +52,3 @@ services:
     tty: true
     working_dir: /workspace
     network_mode: host
-
-
