@@ -9,6 +9,7 @@ ln -s .Dockerfiles/Dockerfile.claude Dockerfile.claude
 ln -s .Dockerfiles/Dockerfile.typescript Dockerfile.typescript
 ln -s .Dockerfiles/typescript/entrypoint.sh entrypoint.sh
 ln -s .Dockerfiles/compose.yml compose.yml
+ln -s .Dockerfiles/apt-packages.txt apt-packages.txt
 ln -s .Dockerfiles/.env.example .env
 ```
 

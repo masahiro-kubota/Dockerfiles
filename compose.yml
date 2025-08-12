@@ -1,5 +1,3 @@
-version: "3.9"
-
 x-common: &common
   tty: true
   working_dir: /workspace
@@ -20,9 +18,10 @@ services:
         USER_UID: ${USER_UID}
         USER_GID: ${USER_GID}
         CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-claude
+    image: local/claude:latest
     environment:
       CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-claude
-    profiles: ["claude"]
+    profiles: ["claude", "typescript"]
     <<: *common
   typescript:
     build:
@@ -33,6 +32,8 @@ services:
         USER_UID: ${USER_UID}
         USER_GID: ${USER_GID}
         CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-typescript
+    depends_on:
+      - claude
     environment:
       CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-typescript
     profiles: ["typescript"]
