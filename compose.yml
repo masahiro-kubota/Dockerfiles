@@ -4,10 +4,13 @@ x-common: &common
   network_mode: host
   volumes:
     - .:/workspace
+    - ${HOME}/.config/gh:/home/${USERNAME}/.config/gh:ro
+    - ${HOME}/.gitconfig:/home/${USERNAME}/.gitconfig:ro
     - ${HOME}/.ssh:/home/${USERNAME}/.ssh:ro
-    - ${HOME}/.gitconfig:/home/${USERNAME}/.gitconfig
     - ${HOME}/.zsh_history:/home/${USERNAME}/.zsh_history
     - ./apt-packages.txt:/home/${USERNAME}/apt-packages.txt
+    - ${HOME}/.claude:/home/${USERNAME}/.claude
+    - ${HOME}/.claude.json:/home/${USERNAME}/.claude.json
 services:
   claude:
     build:
@@ -37,4 +40,17 @@ services:
     environment:
       CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-typescript
     profiles: ["typescript"]
-    <<: *common
+    volumes:
+      - .:/workspace
+      - ${HOME}/.config/gh:/home/${USERNAME}/.config/gh:ro
+      - ${HOME}/.gitconfig:/home/${USERNAME}/.gitconfig:ro
+      - ${HOME}/.ssh:/home/${USERNAME}/.ssh:ro
+      - ${HOME}/.zsh_history:/home/${USERNAME}/.zsh_history
+      - ./apt-packages.txt:/home/${USERNAME}/apt-packages.txt
+      - ${HOME}/.claude:/home/${USERNAME}/.claude
+      - ${HOME}/.claude.json:/home/${USERNAME}/.claude.json
+    tty: true
+    working_dir: /workspace
+    network_mode: host
+
+
