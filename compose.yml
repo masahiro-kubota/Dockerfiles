@@ -1,0 +1,40 @@
+x-common: &common
+  tty: true
+  working_dir: /workspace
+  network_mode: host
+  volumes:
+    - .:/workspace
+    - ${HOME}/.ssh:/home/${USERNAME}/.ssh:ro
+    - ${HOME}/.gitconfig:/home/${USERNAME}/.gitconfig
+    - ${HOME}/.zsh_history:/home/${USERNAME}/.zsh_history
+    - ./apt-packages.txt:/home/${USERNAME}/apt-packages.txt
+services:
+  claude:
+    build:
+      context: .
+      dockerfile: Dockerfile.claude
+      args:
+        USERNAME: ${USERNAME}
+        USER_UID: ${USER_UID}
+        USER_GID: ${USER_GID}
+        CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-claude
+    image: local/claude:latest
+    environment:
+      CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-claude
+    profiles: ["claude", "typescript"]
+    <<: *common
+  typescript:
+    build:
+      context: .
+      dockerfile: Dockerfile.typescript
+      args:
+        USERNAME: ${USERNAME}
+        USER_UID: ${USER_UID}
+        USER_GID: ${USER_GID}
+        CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-typescript
+    depends_on:
+      - claude
+    environment:
+      CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-typescript
+    profiles: ["typescript"]
+    <<: *common

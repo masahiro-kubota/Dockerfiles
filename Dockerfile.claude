@@ -1,0 +1,34 @@
+FROM buildpack-deps:22.04
+
+COPY apt-packages.txt /home/tmp/apt-packages.txt
+RUN apt-get update \
+ && xargs apt-get install -y --no-install-recommends < /home/tmp/apt-packages.txt \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+ARG USERNAME
+ENV USERNAME=${USERNAME}
+ARG USER_UID
+ARG USER_GID
+ARG CONTAINER_NAME
+ENV CONTAINER_NAME=${CONTAINER_NAME}
+
+RUN if ! getent group $USER_GID; then groupadd --gid $USER_GID $USERNAME; fi \
+ && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+ && echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+WORKDIR /home/$USERNAME
+USER $USERNAME
+
+RUN git clone https://github.com/masahiro-kubota/dotfiles.git
+WORKDIR /home/$USERNAME/dotfiles
+RUN ./install.sh
+
+USER root
+RUN mkdir -p /workspace && chown $USER_UID:$USER_UID /workspace
+USER $USERNAME
+WORKDIR /workspace
+
+COPY entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["zsh"]
