@@ -3,11 +3,11 @@ x-common: &common
   working_dir: /workspace
   network_mode: host
   volumes:
-      - .:/workspace
-      - ${HOME}/.ssh:/home/${USERNAME}/.ssh:ro
-      - ${HOME}/.gitconfig:/home/${USERNAME}/.gitconfig
-      - ${HOME}/.zsh_history:/home/${USERNAME}/.zsh_history
-      - ./apt-packages.txt:/home/${USERNAME}/apt-packages.txt
+    - .:/workspace
+    - ${HOME}/.ssh:/home/${USERNAME}/.ssh:ro
+    - ${HOME}/.gitconfig:/home/${USERNAME}/.gitconfig
+    - ${HOME}/.zsh_history:/home/${USERNAME}/.zsh_history
+    - ./apt-packages.txt:/home/${USERNAME}/apt-packages.txt
 services:
   claude:
     build:
@@ -38,4 +38,3 @@ services:
       CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-typescript
     profiles: ["typescript"]
     <<: *common
-    
