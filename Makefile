@@ -1,4 +1,4 @@
-SERVICE ?= claude   # claude | typescript | ros2 など
+SERVICE ?= claude
 PROFILE ?= $(SERVICE)
 
 .PHONY: up build down logs exec ps restart run upexec stop stop-all
