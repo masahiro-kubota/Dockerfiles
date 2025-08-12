@@ -1,6 +1,3 @@
-Dockerfileとかentrypoint.shをルートにもってくるようにmakeを変えたい。
-.Dockerfilesでコピーするようにしたい。
-
 # Dockerfiles
 
 ## Setup
@@ -11,6 +8,8 @@ ln -s .Dockerfiles/Makefile Makefile
 ln -s .Dockerfiles/Dockerfile.claude Dockerfile.claude
 ln -s .Dockerfiles/Dockerfile.typescript Dockerfile.typescript
 ln -s .Dockerfiles/typescript/entrypoint.sh entrypoint.sh
+ln -s .Dockerfiles/compose.yml compose.yml
+ln -s .Dockerfiles/.env.example .env
 ```
 
 ### For devcontainer development

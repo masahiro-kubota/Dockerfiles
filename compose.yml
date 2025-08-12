@@ -1,24 +1,40 @@
-services:
-  agent:
-    build:
-      context: .
-      dockerfile: Dockerfile.agent
-      tags:
-        - local/agent:latest
-    volumes:
-      - .:/work
-    profiles: ["agent"]
-    tty: true
+version: "3.9"
 
-  agent-ros2:
+x-common: &common
+  tty: true
+  working_dir: /workspace
+  network_mode: host
+  volumes:
+      - .:/workspace
+      - ${HOME}/.ssh:/home/${USERNAME}/.ssh:ro
+      - ${HOME}/.gitconfig:/home/${USERNAME}/.gitconfig
+      - ${HOME}/.zsh_history:/home/${USERNAME}/.zsh_history
+      - ./apt-packages.txt:/home/${USERNAME}/apt-packages.txt
+services:
+  claude:
     build:
       context: .
-      dockerfile: Dockerfile.ros2
-    volumes:
-      - .:/work
-      - /dev:/dev              # デバイス触るなら
-    network_mode: host         # RViz/ROS通信用に必要なら
-    ipc: host
-    privileged: true           # シリアル等使うなら
-    profiles: ["full"]
-    tty: true
+      dockerfile: Dockerfile.claude
+      args:
+        USERNAME: ${USERNAME}
+        USER_UID: ${USER_UID}
+        USER_GID: ${USER_GID}
+        CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-claude
+    environment:
+      CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-claude
+    profiles: ["claude"]
+    <<: *common
+  typescript:
+    build:
+      context: .
+      dockerfile: Dockerfile.typescript
+      args:
+        USERNAME: ${USERNAME}
+        USER_UID: ${USER_UID}
+        USER_GID: ${USER_GID}
+        CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-typescript
+    environment:
+      CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-typescript
+    profiles: ["typescript"]
+    <<: *common
+    

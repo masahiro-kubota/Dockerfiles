@@ -20,12 +20,10 @@ RUN if ! getent group $USER_GID; then groupadd --gid $USER_GID $USERNAME; fi \
 WORKDIR /home/$USERNAME
 USER $USERNAME
 
-# dotfiles セットアップ
 RUN git clone https://github.com/masahiro-kubota/dotfiles.git
 WORKDIR /home/$USERNAME/dotfiles
 RUN ./install.sh
 
-# 作業ディレクトリ
 USER root
 RUN mkdir -p /workspace && chown $USER_UID:$USER_UID /workspace
 USER $USERNAME
