@@ -28,4 +28,5 @@ EOL
 
 cd /workspace || exit
 
+# commandを実行
 exec "$@"

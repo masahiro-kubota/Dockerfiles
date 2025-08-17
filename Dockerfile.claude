@@ -35,9 +35,15 @@ RUN npm install -g \
     pnpm \
     @anthropic-ai/claude-code@1.0.24
 
+USER root
+
+COPY requirements.txt /home/tmp/requirements.txt
+RUN pip3 install -r /home/tmp/requirements.txt
+
 USER $USERNAME
 WORKDIR /workspace
 
+COPY agent/ /workspace/agent/
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["zsh"]

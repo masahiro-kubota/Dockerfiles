@@ -11,3 +11,5 @@ build-essential
 psmisc
 gh
 sudo
+locales
+locales-all

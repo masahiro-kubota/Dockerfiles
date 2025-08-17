@@ -35,3 +35,32 @@ stop:
 
 kill-all:
 	docker compose down --remove-orphans
+
+# ボリューム管理用のコマンド
+list-volumes:
+	docker volume ls | grep $(SERVICE)-history
+
+clean-volumes:
+	docker volume ls -q | grep $(SERVICE)-history | xargs -r docker volume rm
+
+# API開発用コマンド
+api-up:
+	docker compose --profile api up -d
+
+api-down:
+	docker compose --profile api down
+
+api-logs:
+	docker compose logs -f api-gateway claude
+
+api-build:
+	docker compose --profile api build
+
+# テスト用
+test-curl:
+	@echo "Testing API Gateway..."
+	curl -X POST http://localhost:8000/threads/test123/messages \
+		-H "Content-Type: application/json" \
+		-d '{"text": "Hello World"}' | jq .
+	@echo "\nTesting healthz..."
+	curl -X GET http://localhost:8000/healthz | jq .
