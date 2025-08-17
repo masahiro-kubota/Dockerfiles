@@ -1,7 +1,8 @@
 x-common: &common
   tty: true
   working_dir: /workspace
-  network_mode: host
+  networks:
+    - app-network
   volumes:
     - .:/workspace
     - ${HOME}/.config/gh:/home/${USERNAME}/.config/gh:ro
@@ -11,7 +12,13 @@ x-common: &common
     - ./apt-packages.txt:/home/${USERNAME}/apt-packages.txt
     - ${HOME}/.claude:/home/${USERNAME}/.claude
     - ${HOME}/.claude.json:/home/${USERNAME}/.claude.json
+
+networks:
+  app-network:
+    driver: bridge
+
 services:
+  # Agent コンテナ（FastAPI）
   claude:
     build:
       context: .
@@ -24,8 +31,32 @@ services:
     image: local/claude:latest
     environment:
       CONTAINER_NAME: ${COMPOSE_PROJECT_NAME}-claude
-    profiles: ["claude", "typescript"]
+      LANG: ja_JP.UTF-8
+      LANGUAGE: ja_JP:ja
+      LC_ALL: ja_JP.UTF-8
+    expose:
+      - "8001"
+    command: ["sh", "-c", "cd /workspace && python3 agent/main.py"]
+    profiles: ["claude", "typescript", "api"]
     <<: *common
+
+  # API Gateway（FastAPI）
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile.gateway
+    image: local/api-gateway:latest
+    environment:
+      CLAUDE_URL: http://claude:8001
+    ports:
+      - "8000:8000"
+    depends_on:
+      - claude
+    profiles: ["api"]
+    networks:
+      - app-network
+
+  # 既存のtypescriptサービス
   typescript:
     build:
       context: .
@@ -51,4 +82,5 @@ services:
       - ${HOME}/.claude.json:/home/${USERNAME}/.claude.json
     tty: true
     working_dir: /workspace
-    network_mode: host
+    networks:
+      - app-network
